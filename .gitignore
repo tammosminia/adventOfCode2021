@@ -1,2 +1,4 @@
 .stack-work/
 *~
+/adventOfCode2021.cabal
+/stack.yaml.lock
