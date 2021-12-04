@@ -2,6 +2,7 @@ import Test.Hspec
 import Test.QuickCheck
 import Day1
 import Day2
+import Day3
 
 main :: IO ()
 main = hspec $ do
@@ -25,4 +26,23 @@ main = hspec $ do
       aimFor [] `shouldBe` (0, 0)
       aimFor [down 2, forward 5] `shouldBe` (5, 10)
       aimFor example `shouldBe` (15, 60)
+
+  describe "day3" $ do
+    let example = ["00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000", "11001", "00010", "01010"]
+    it "powerConsumption" $ do
+      powerConsumption example `shouldBe` 198
+
+    it "stringToBinary" $ do
+      stringToBinary "101" `shouldBe` [1,0,1]
+
+    it "binaryToInt" $ do
+      binaryToInt [1, 0, 1] `shouldBe` 5
+      binaryToInt [0, 1, 0] `shouldBe` 2
+
+    it "oxygenRating" $ do
+      oxygenRating (map stringToBinary example) `shouldBe` stringToBinary "10111"
+
+    it "lifeSupportRating" $ do
+      lifeSupportRating example `shouldBe` 230
+
 
