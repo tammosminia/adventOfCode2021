@@ -1,23 +1,32 @@
 module Day6
-    ( lanternfish1
+    ( lanternfish
     ) where
 
 import Data.List (transpose, sortOn, (\\))
+--import qualified Data.Map as Map
 
 type Fish = Int
-type Population = [Fish]
+type InitPopulation = [Fish]
+type Population = [Integer] --[Amount of 0 fish, amount of 1 fish,...,amount of 8 fish]
 
 nextDay :: Population -> Population
-nextDay yesterday = ageAllFish ++ newFish
+nextDay p = [fish f | f <- [0..8]]
   where
-    newFish = [8 | _ <- filter (==0) yesterday]
-    ageAllFish = map ageOneFish yesterday
-    ageOneFish 0 = 6
-    ageOneFish f = f - 1
+    fish 8 = p !! 0
+    fish 6 = (p !! 0) + (p !! 7)
+    fish x = p !! (x + 1)
 
 advanceDays :: Int -> Population -> Population
 advanceDays 0 p = p
 advanceDays d p = advanceDays (d - 1) (nextDay p)
 
-lanternfish1 :: Int -> Population -> Int
-lanternfish1 d p = length $ advanceDays d p
+compilePopulation :: InitPopulation -> Population
+compilePopulation p = map countFish [0..8]
+  where
+    countFish f = toInteger (length $ filter (==f) p)
+
+lanternfish :: Int -> InitPopulation -> Integer
+lanternfish d p = count $ advanceDays d (compilePopulation p)
+
+count :: Population -> Integer
+count p = sum p

@@ -83,8 +83,9 @@ main = hspec $ do
 
   describe "day6" $ do
     let example = [3,4,3,1,2]
-    it "lanternfish1" $ do
-      lanternfish1 18 example `shouldBe` 26
-      lanternfish1 80 example `shouldBe` 5934
+    it "lanternfish" $ do
+      lanternfish 18 example `shouldBe` 26
+      lanternfish 80 example `shouldBe` 5934
+      lanternfish 256 example `shouldBe` 26984457539
 
 
