@@ -3,6 +3,9 @@ import Test.QuickCheck
 import Day1
 import Day2
 import Day3
+import Day4
+import Day5
+import Day6
 
 main :: IO ()
 main = hspec $ do
@@ -44,5 +47,44 @@ main = hspec $ do
 
     it "lifeSupportRating" $ do
       lifeSupportRating example `shouldBe` 230
+
+  describe "day4" $ do
+    let exampleDrawings = [7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1]
+    let exampleBoards = [ [[22,13,17,11,0],[8,2,23,4,24],[21,9,14,16,7],[6,10,3,18,5],[1,12,20,15,19]], [[3,15,0,2,22],[9,18,13,17,5],[19,8,7,25,23],[20,11,10,24,4],[14,21,16,12,6]], [[14,21,17,24,4],[10,16,15,9,19],[18,8,23,26,20],[22,11,13,6,5],[2,0,12,3,7]] ]
+    it "bestScore" $ do
+      bestScore exampleBoards exampleDrawings `shouldBe` 4512
+
+    it "worstScore" $ do
+      worstScore exampleBoards exampleDrawings `shouldBe` 1924
+
+  describe "day5" $ do
+    let example = [((0,9), (5,9)), ((8,0), (0,8)), ((9,4), (3,4)), ((2,2), (2,1)), ((7,0), (7,4)), ((6,4), (2,0)), ((0,9), (2,9)), ((3,4), (1,4)), ((0,0), (8,8)), ((5,5), (8,2))]
+    it "dangerCount1" $ do
+      dangerCount1 example `shouldBe` 5
+
+    it "dangerCount2" $ do
+      dangerCount2 example `shouldBe` 12
+
+    it "crosses2" $ do
+      crosses2 ((0,0),(1,1)) (0,0) `shouldBe` True
+      crosses2 ((0,0),(1,1)) (1,0) `shouldBe` False
+      crosses2 ((0,0),(1,1)) (2,2) `shouldBe` False
+      crosses2 ((0,0),(0,100)) (0,2) `shouldBe` True
+      crosses2 ((0,0),(0,100)) (1,2) `shouldBe` False
+      crosses2 ((0,0),(100,100)) (1,2) `shouldBe` False
+      crosses2 ((0,0),(100,100)) (1,1) `shouldBe` True
+      crosses2 ((0,0),(100,100)) (10,10) `shouldBe` True
+      crosses2 ((0,0),(100,100)) (10,20) `shouldBe` False
+      crosses2 ((8,0),(0,8)) (8,0) `shouldBe` True
+      crosses2 ((8,0),(0,8)) (0,8) `shouldBe` True
+      crosses2 ((8,0),(0,8)) (4,4) `shouldBe` True
+      crosses2 ((8,0),(0,8)) (3,5) `shouldBe` True
+      crosses2 ((8,0),(0,8)) (3,3) `shouldBe` False
+
+  describe "day6" $ do
+    let example = [3,4,3,1,2]
+    it "lanternfish1" $ do
+      lanternfish1 18 example `shouldBe` 26
+      lanternfish1 80 example `shouldBe` 5934
 
 
