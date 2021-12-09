@@ -1,11 +1,16 @@
 import Test.Hspec
 import Test.QuickCheck
+
+import qualified Data.Set as Set
+
 import Day1
 import Day2
 import Day3
 import Day4
 import Day5
 import Day6
+import Day7
+import Day8
 
 main :: IO ()
 main = hspec $ do
@@ -87,5 +92,33 @@ main = hspec $ do
       lanternfish 18 example `shouldBe` 26
       lanternfish 80 example `shouldBe` 5934
       lanternfish 256 example `shouldBe` 26984457539
+
+  describe "day7" $ do
+    let example = [16,1,2,0,4,2,7,1,2,14]
+    it "crabs" $ do
+      crabs example `shouldBe` 37
+
+    it "crabs2" $ do
+      crabs2 example `shouldBe` 168
+
+  describe "day8" $ do
+    let example = ["egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb", "gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce"]
+    it "digits1" $ do
+      digits1 example `shouldBe` 6
+
+    it "digits2" $ do
+      digits2 example `shouldBe` 8717 + 4315
+
+    it "decrypt" $ do
+      length (Set.fromList (decrypt (fst (parseInputLine (head example))))) `shouldBe` 10
+      
+    it "decode" $ do
+      let encoding = decrypt (fst (parseInputLine (head example)))
+      decode encoding [Set.fromList "fecab"] `shouldBe` 2
+      
+    it "parseInputLine" $ do
+      let p = parseInputLine (head example)
+      length (fst p) `shouldBe` 10
+      length (snd p) `shouldBe` 4
 
 
