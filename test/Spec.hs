@@ -11,6 +11,8 @@ import Day5
 import Day6
 import Day7
 import Day8
+import Day9
+import Day10
 
 main :: IO ()
 main = hspec $ do
@@ -120,5 +122,26 @@ main = hspec $ do
       let p = parseInputLine (head example)
       length (fst p) `shouldBe` 10
       length (snd p) `shouldBe` 4
+
+  describe "day9" $ do
+    let example = ["2199943210","3987894921","9856789892","8767896789","9899965678"]
+    it "lavaTube1" $ do
+      lavaTube1 example `shouldBe` 15
+
+    it "lavaTube2" $ do
+      lavaTube2 example `shouldBe` 1134
+
+  describe "day10" $ do
+    let example = ["[({(<(())[]>[[{[]{<()<>>","[(()[<>])]({[<{<<[]>>(","{([(<{}[<>[]}>{[]{[(<()>","(((({<>}<{<{<>}{[]{[]{}","[[<[([]))<([[{}[[()]]]","[{[{({}]{}}([{[{{{}}([]","{<[[]]>}<{[{[{[]{()[[[]","[<(<(<(<{}))><([]([]()","<{([([[(<>()){}]>(<<{{","<{([{{}}[<[[[<>{}]]]>[]]"]
+    it "parseLines1" $ do
+      parseLines1 ["(]"] `shouldBe` 57
+      parseLines1 ["{()()()>"] `shouldBe` 25137
+      parseLines1 ["(((()))}"] `shouldBe` 1197
+      parseLines1 ["(]", "()", "(((()))}"] `shouldBe` 57 + 1197
+      parseLines1 ["{([(<{}[<>[]}>{[]{[(<()>"] `shouldBe` 1197
+      parseLines1 example `shouldBe` 26397
+
+    it "parseLines2" $ do
+      parseLines2 example `shouldBe` 288957
 
 
