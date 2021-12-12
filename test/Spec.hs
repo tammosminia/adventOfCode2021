@@ -13,6 +13,7 @@ import Day7
 import Day8
 import Day9
 import Day10
+import Day11
 
 main :: IO ()
 main = hspec $ do
@@ -144,4 +145,8 @@ main = hspec $ do
     it "parseLines2" $ do
       parseLines2 example `shouldBe` 288957
 
+  describe "day11" $ do
+    let example = ["5483143223","2745854711","5264556173","6141336146","6357385478","4167524645","2176841721","6882881134","4846848554","5283751526"]
+    it "dumboOctopus1" $ do
+      dumboOctopus1 example 100 `shouldBe` 1656
 
