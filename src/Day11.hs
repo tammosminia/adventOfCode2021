@@ -1,5 +1,5 @@
 module Day11
-    ( dumboOctopus1
+    ( dumboOctopus1, dumboOctopus2, initGrid, step
     ) where
 
 import Data.List
@@ -46,20 +46,32 @@ step gridIn = unflash $ flash increased
     allLocations = [(x, y) | x <- [0..9], y <- [0..9]]
     increased = mapGrid (+ 1) gridIn
     findEnergy e g = filter (\l -> energy g l == e) allLocations
-    unflash g = (mapGrid tenToZero g, length (findEnergy 10 g))
-    tenToZero e = if e == 10 then 0 else e
+    unflash g = (mapGrid elevenToZero g, length (findEnergy 11 g))
+    elevenToZero e = if e == 11 then 0 else e
     flash g
-      | null nines = g
-      | otherwise = flash $ foldl flashNeighbour g (neighbours (head nines))
+      | null tens = g
+      | otherwise = flash $ head10to11 $ flashNeighbours
       where 
-        nines = findEnergy 9 g
+        tens = findEnergy 10 g
+        head10 = head tens
         flashNeighbour g l = setEnergy g l $ newEnergy $ energy g l
-        newEnergy x = if x > 8 then x else x + 1
+        flashNeighbours = foldl flashNeighbour g (neighbours head10)
+        head10to11 g = setEnergy g head10 11
+        newEnergy x = if x > 9 then x else x + 1
         
 dumboOctopus1 :: [String] -> Int -> Int
 dumboOctopus1 input steps = inner (initGrid input) steps
   where 
     inner g 0 = 0 
-    inner g steps = flashes + inner ng (steps - 1)
+    inner g steps = flashes + (inner ng (steps - 1))
       where  
+        (ng, flashes) = step g
+
+dumboOctopus2 :: [String] -> Int
+dumboOctopus2 input = inner (initGrid input)
+  where
+    inner g
+      | flashes == 100 = 1
+      | otherwise = 1 + inner ng
+      where
         (ng, flashes) = step g

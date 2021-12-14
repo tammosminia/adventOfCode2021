@@ -147,6 +147,19 @@ main = hspec $ do
 
   describe "day11" $ do
     let example = ["5483143223","2745854711","5264556173","6141336146","6357385478","4167524645","2176841721","6882881134","4846848554","5283751526"]
+--    it "step" $ do
+--      let (g1, f1) = step (initGrid example)
+--      putStrLn (show g1)
+--      f1 `shouldBe` 0
+--      let (g2, f2) = step g1
+--      putStrLn (show g2)
+--      f2 `shouldBe` 10
+
     it "dumboOctopus1" $ do
+      dumboOctopus1 example 1 `shouldBe` 0
+      dumboOctopus1 example 10 `shouldBe` 204
       dumboOctopus1 example 100 `shouldBe` 1656
+
+    it "dumboOctopus2" $ do
+      dumboOctopus2 example `shouldBe` 195
 
