@@ -14,6 +14,7 @@ import Day8
 import Day9
 import Day10
 import Day11
+import Day12
 
 main :: IO ()
 main = hspec $ do
@@ -162,4 +163,31 @@ main = hspec $ do
 
     it "dumboOctopus2" $ do
       dumboOctopus2 example `shouldBe` 195
+
+
+  describe "day12" $ do
+    let example1 = ["start-A","start-b","A-c","A-b","b-d","A-end","b-end"]
+    let exampleSL = ["dc-end","HN-start","start-kj","dc-start","dc-HN","LN-dc","HN-end","kj-sa","kj-HN","kj-dc"]
+    let example2 = ["fs-end","he-DX","fs-he","start-DX","pj-DX","end-zg","zg-sl","zg-pj","pj-he","RW-he","fs-DX","pj-RW","zg-RW","start-pj","he-WI","zg-he","pj-fs","start-RW"]
+    it "cavePaths1" $ do
+      cavePaths1 example1 `shouldBe` 10
+      cavePaths1 example2 `shouldBe` 226
+
+    it "containsSmallOnce" $ do
+      containsSmallOnce [] `shouldBe` True
+      containsSmallOnce [Start, Day12.Small "a"] `shouldBe` True
+      containsSmallOnce [Start, Day12.Small "a", Day12.Small "a"] `shouldBe` False
+      containsSmallOnce [Day12.Small "a", Day12.Small "b"] `shouldBe` True
+      containsSmallOnce [Day12.Small "a", Day12.Small "b", Day12.Small "a"] `shouldBe` False
+      containsSmallOnce [Start, Day12.Big "HN", Day12.Small "dc", Day12.Big "HN", Day12.Small "kj", Day12.Small "sa", Day12.Small "kj"] `shouldBe` False
+
+    it "paths2" $ do
+      paths2 (initCave exampleSL) `shouldBe` []
+
+    it "cavePaths2" $ do
+      cavePaths2 example1 `shouldBe` 36
+      cavePaths2 exampleSL `shouldBe` 103
+      cavePaths2 example2 `shouldBe` 3509
+
+
 
