@@ -58,8 +58,7 @@ paths2 cm = inner [] Start
         canContinue Start = False
         canContinue End = True
         canContinue (Big _) = True
-        canContinue s = (not
-        Elem s path) || (containsSmallOnce path)
+        canContinue s = (notElem s path) || (containsSmallOnce path)
 
 containsSmallOnce :: Path -> Bool
 containsSmallOnce p = all (\x -> (length x) == 1) $ group $ sort $ filter isSmall p
