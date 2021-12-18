@@ -6,3 +6,4 @@ input = ["KF-sr","OO-vy","start-FP","FP-end","vy-mi","vy-KF","vy-na","start-sr",
 main :: IO ()
 main = do
   print (cavePaths1 input)
+  print (cavePaths2 input)

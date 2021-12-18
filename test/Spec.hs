@@ -2,6 +2,7 @@ import Test.Hspec
 import Test.QuickCheck
 
 import qualified Data.Set as Set
+import qualified Data.Map as Map
 
 import Day1
 import Day2
@@ -175,14 +176,17 @@ main = hspec $ do
 
     it "containsSmallOnce" $ do
       containsSmallOnce [] `shouldBe` True
-      containsSmallOnce [Start, Day12.Small "a"] `shouldBe` True
-      containsSmallOnce [Start, Day12.Small "a", Day12.Small "a"] `shouldBe` False
-      containsSmallOnce [Day12.Small "a", Day12.Small "b"] `shouldBe` True
-      containsSmallOnce [Day12.Small "a", Day12.Small "b", Day12.Small "a"] `shouldBe` False
-      containsSmallOnce [Start, Day12.Big "HN", Day12.Small "dc", Day12.Big "HN", Day12.Small "kj", Day12.Small "sa", Day12.Small "kj"] `shouldBe` False
+      containsSmallOnce ["start", "a"] `shouldBe` True
+      containsSmallOnce ["start", "a", "a"] `shouldBe` False
+      containsSmallOnce ["a", "b"] `shouldBe` True
+      containsSmallOnce ["a", "b", "a"] `shouldBe` False
+      containsSmallOnce ["start", "HN", "dc", "HN", "kj", "sa", "kj"] `shouldBe` False
+
+    it "canContinueTo" $ do
+      canContinueTo ["start", "HN", "dc", "HN", "kj", "sa", "kj"] "dc" `shouldBe` False
 
     it "paths2" $ do
-      paths2 (initCave exampleSL) `shouldBe` []
+      elem ["start", "HN", "dc", "HN", "kj", "sa", "kj", "dc", "end"] (paths2 (initCave exampleSL)) `shouldBe` False
 
     it "cavePaths2" $ do
       cavePaths2 example1 `shouldBe` 36

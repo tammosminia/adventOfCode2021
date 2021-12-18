@@ -1,5 +1,5 @@
 module Day12
-    ( cavePaths1, initCave, paths2, cavePaths2, containsSmallOnce, Cave(Start, Small, Big)
+    ( cavePaths1, initCave, paths2, cavePaths2, containsSmallOnce, canContinueTo
     ) where
 
 import Data.List
@@ -7,64 +7,58 @@ import qualified Data.Map as Map
 import qualified Data.Char as Char
 import Data.List.Split
 
-data Cave = Start | End | Small { name :: String } | Big { name :: String } deriving (Eq, Ord)
+type Cave = String
 type CaveMap = Map.Map Cave [Cave]
 type Path = [Cave]
 
-instance Show Cave where
-  show Start = "start"
-  show End = "end"
-  show (Small x) = x
-  show (Big x) = x
+isSmall :: Cave -> Bool
+isSmall "start" = False
+isSmall "end" = False
+isSmall s = Char.isLower (head s)
 
 initCave :: [String] -> CaveMap
 initCave lines = mapOfLists $ concatMap parseLine lines
   where
-    parseCave "start" = Start
-    parseCave "end" = End
-    parseCave s
-      | Char.isLower (head s) = Small { name = s }
-      | otherwise = Big { name = s }
     parseLine line = [(c1, c2), (c2, c1)]
-      where [c1, c2] = map parseCave $ splitOn "-" line
+      where [c1, c2] = splitOn "-" line
 
 cavePaths1 :: [String] -> Int
 cavePaths1 i = length $ paths $ initCave i
 
 paths :: CaveMap -> [Path]
-paths cm = inner [] Start
+paths cm = inner [] "start"
   where
-    inner path End = [path ++ [End]]
-    inner path last = concatMap continue $ filter canContinue $ cm Map.! last
+    inner path "end" = [path ++ ["end"]]
+    inner path last = concatMap continue $ filter canContinueOn $ cm Map.! last
       where
         continue = inner (path ++ [last])
-        canContinue :: Cave -> Bool
-        canContinue Start = False
-        canContinue End = True
-        canContinue (Big _) = True
-        canContinue Small { name = n } = notElem (Small { name = n }) path
+        canContinueOn :: Cave -> Bool
+        canContinueOn "start" = False
+        canContinueOn "end" = True
+        canContinueOn c
+          | isSmall c = notElem c path
+          | otherwise = True
 
 cavePaths2 :: [String] -> Int
 cavePaths2 i = length $ paths2 $ initCave i
 
 paths2 :: CaveMap -> [Path]
-paths2 cm = inner [] Start
+paths2 cm = inner [] "start"
   where
-    inner path End = [path ++ [End]]
-    inner path last = concatMap continue $ filter canContinue $ cm Map.! last
+    inner path "end" = [path ++ ["end"]]
+    inner path last = concatMap continue $ filter (canContinueTo (path ++ [last])) $ cm Map.! last
       where
         continue = inner (path ++ [last])
-        canContinue :: Cave -> Bool
-        canContinue Start = False
-        canContinue End = True
-        canContinue (Big _) = True
-        canContinue s = (notElem s path) || (containsSmallOnce path)
+        
+canContinueTo :: Path -> Cave -> Bool
+canContinueTo _ "start" = False
+canContinueTo _ "end" = True
+canContinueTo path c
+   | isSmall c = (notElem c path) || (containsSmallOnce path)
+   | otherwise = True
 
 containsSmallOnce :: Path -> Bool
 containsSmallOnce p = all (\x -> (length x) == 1) $ group $ sort $ filter isSmall p
-  where
-    isSmall Small { name = _ } = True
-    isSmall _ = False
 
 mapOfLists :: (Ord k, Eq k) => [(k, v)] -> Map.Map k [v]
 mapOfLists l = Map.fromList lll
