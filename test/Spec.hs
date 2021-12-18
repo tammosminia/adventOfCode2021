@@ -16,6 +16,7 @@ import Day9
 import Day10
 import Day11
 import Day12
+import Day13
 
 main :: IO ()
 main = hspec $ do
@@ -193,5 +194,11 @@ main = hspec $ do
       cavePaths2 exampleSL `shouldBe` 103
       cavePaths2 example2 `shouldBe` 3509
 
+  describe "Day13" $ do
+    let exampleDots = [(6,10),(0,14),(9,10),(0,3),(10,4),(4,11),(6,0),(6,12),(4,1),(0,13),(10,12),(3,4),(3,0),(8,4),(1,10),(2,14),(8,10),(9,0)]
+    let exampleFolds = ["fold along y=7", "fold along x=5"]
+    
+    it "origami1" $ do
+      origami1 exampleDots exampleFolds `shouldBe` 17
 
 
