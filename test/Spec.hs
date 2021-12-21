@@ -18,6 +18,7 @@ import Day11
 import Day12
 import Day13
 import Day14
+import Day15
 
 main :: IO ()
 main = hspec $ do
@@ -211,5 +212,15 @@ main = hspec $ do
       
     it "polymer3" $ do
       polymer3 exampleRules exampleInput 40 `shouldBe` 2188189693529
+
+  describe "Day15" $ do
+    let example = ["1163751742","1381373672","2136511328","3694931569","7463417111","1319128137","1359912421","3125421639","1293138521","2311944581"]
+    
+    it "chiton1" $ do
+      chiton1 example `shouldBe` 40
+      
+    it "chiton2" $ do
+      chiton2 example `shouldBe` 315
+      
 
 

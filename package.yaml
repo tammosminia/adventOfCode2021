@@ -25,6 +25,9 @@ dependencies:
 - QuickCheck
 - containers
 - split
+- pqueue
+- unordered-containers
+- hashable
 
 library:
   source-dirs: src
