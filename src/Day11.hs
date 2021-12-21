@@ -2,19 +2,12 @@ module Day11
     ( dumboOctopus1, dumboOctopus2, initGrid, step
     ) where
 
+import Util
 import Data.List
 
 type EnergyLevel = Int
 type Grid = [[EnergyLevel]] -- rows, columns. 0,0 is top left
 type Location = (Int, Int)
-
-replace :: [a] -> Int -> a -> [a]
-replace xs i e = case splitAt i xs of
-   (before, _:after) -> before ++ e: after
-   _ -> xs
-   
-charToInt :: Char -> Int
-charToInt c = read [c] :: Int
 
 initGrid :: [String] -> Grid
 initGrid = map initLine

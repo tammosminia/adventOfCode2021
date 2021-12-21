@@ -22,11 +22,6 @@ crosses2 ((x1, y1), (x2, y2)) (px, py)
   | otherwise = inside x1 x2 px && inside y1 y2 py && (ratio x1 x2 px == ratio y1 y2 py)
     where
       ratio bound1 bound2 middle = (fromIntegral (abs (bound1 - bound2))) / (fromIntegral (abs (middle - bound1)))
---        where 
---          lower = min bound1 bound2
---          upper = max bound1 bound2
---          div0 _ 0 = 0
---          div0 x y = div x y2
       
 inside :: Int -> Int -> Int -> Bool
 inside bound1 bound2 m = m >= lowerBound && m <= upperBound

@@ -2,6 +2,7 @@ module Day12
     ( cavePaths1, initCave, paths2, cavePaths2, containsSmallOnce, canContinueTo
     ) where
 
+import Util
 import Data.List
 import qualified Data.Map as Map
 import qualified Data.Char as Char
@@ -59,9 +60,3 @@ canContinueTo path c
 
 containsSmallOnce :: Path -> Bool
 containsSmallOnce p = all (\x -> (length x) == 1) $ group $ sort $ filter isSmall p
-
-mapOfLists :: (Ord k, Eq k) => [(k, v)] -> Map.Map k [v]
-mapOfLists l = Map.fromList lll
-  where
-    ll = groupBy (\(k1, v1) (k2, v2) -> k1 == k2) $ sortOn fst l
-    lll = map (\sl -> (fst (head sl), map snd sl)) ll

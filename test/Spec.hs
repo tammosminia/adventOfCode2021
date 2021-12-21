@@ -17,6 +17,7 @@ import Day10
 import Day11
 import Day12
 import Day13
+import Day14
 
 main :: IO ()
 main = hspec $ do
@@ -200,5 +201,15 @@ main = hspec $ do
     
     it "origami1" $ do
       origami1 exampleDots exampleFolds `shouldBe` 17
+
+  describe "Day14" $ do
+    let exampleRules = ["CH -> B","HH -> N","CB -> H","NH -> C","HB -> C","HC -> B","HN -> C","NN -> C","BH -> H","NC -> B","NB -> B","BN -> B","BB -> N","BC -> B","CC -> N","CN -> C"]
+    let exampleInput = "NNCB"
+    
+    it "polymer1" $ do
+      polymer1 exampleRules exampleInput 10 `shouldBe` 1588
+      
+    it "polymer3" $ do
+      polymer3 exampleRules exampleInput 40 `shouldBe` 2188189693529
 
 
