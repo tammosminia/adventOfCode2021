@@ -19,6 +19,7 @@ import Day12
 import Day13
 import Day14
 import Day15
+import Day16
 
 main :: IO ()
 main = hspec $ do
@@ -221,6 +222,24 @@ main = hspec $ do
       
     it "chiton2" $ do
       chiton2 example `shouldBe` 315
-      
+
+  describe "Day16" $ do
+    it "bits1" $ do
+      bits1 "D2FE28" `shouldBe` 6
+      bits1 "8A004A801A8002F478" `shouldBe` 16
+      bits1 "620080001611562C8802118E34" `shouldBe` 12
+      bits1 "C0015000016115A2E0802F182340" `shouldBe` 23
+      bits1 "A0016C880162017C3686B18A3D4780" `shouldBe` 31
+
+    it "bits2" $ do
+      bits2 "C200B40A82" `shouldBe` 3
+      bits2 "04005AC33890" `shouldBe` 54
+      bits2 "880086C3E88112" `shouldBe` 7
+      bits2 "CE00C43D881120" `shouldBe` 9
+      bits2 "D8005AC2A8F0" `shouldBe` 1
+      bits2 "F600BC2D8F" `shouldBe` 0
+      bits2 "9C005AC2F8F0" `shouldBe` 0
+      bits2 "9C0141080250320F1802104A08" `shouldBe` 1
+
 
 
