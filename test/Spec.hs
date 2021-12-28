@@ -20,6 +20,7 @@ import Day13
 import Day14
 import Day15
 import Day16
+import Day17
 
 main :: IO ()
 main = hspec $ do
@@ -240,6 +241,25 @@ main = hspec $ do
       bits2 "F600BC2D8F" `shouldBe` 0
       bits2 "9C005AC2F8F0" `shouldBe` 0
       bits2 "9C0141080250320F1802104A08" `shouldBe` 1
+
+  describe "Day17" $ do
+    it "trickShot1" $ do
+      trickShot1 100 ((20, -5), (30, -10)) `shouldBe` 45
+
+    it "hitsTarget" $ do
+      hitsTarget (0, 0) ((0, -5), (0, -10)) `shouldBe` True
+      hitsTarget (10, 0) ((10, 0), (10, 0)) `shouldBe` True
+      hitsTarget (10, 1) ((20, 0), (30, 0)) `shouldBe` True
+      hitsTarget (25, -7) ((20, -5), (30, -10)) `shouldBe` True
+      hitsTarget (7, 2) ((20, -5), (30, -10)) `shouldBe` True
+      hitsTarget (6, 3) ((20, -5), (30, -10)) `shouldBe` True
+      hitsTarget (6, 9) ((20, -5), (30, -10)) `shouldBe` True
+      hitsTarget (9, 0) ((20, -5), (30, -10)) `shouldBe` True
+      hitsTarget (17, -4) ((20, -5), (30, -10)) `shouldBe` False
+
+    it "trickShot2" $ do
+      trickShot2 100 ((20, -5), (30, -10)) `shouldBe` 112
+
 
 
 
