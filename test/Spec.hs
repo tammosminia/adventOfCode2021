@@ -21,6 +21,7 @@ import Day14
 import Day15
 import Day16
 import Day17
+import Day18
 
 main :: IO ()
 main = hspec $ do
@@ -259,6 +260,23 @@ main = hspec $ do
 
     it "trickShot2" $ do
       trickShot2 100 ((20, -5), (30, -10)) `shouldBe` 112
+
+  describe "Day18" $ do
+    it "paths and back" $ do
+      let test s = show (pathsToNumber (numberToPaths (compileSnailNumber s))) `shouldBe` s
+      test "[1,2]"
+      test "[[1,2],3]"
+      test "[[[[[9,8],1],2],3],4]"
+      test "[7,[6,[5,[4,[3,2]]]]]"
+      test "[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]"
+      test "[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]"
+      test "[[[[4,3],4],4],[7,[[8,4],9]]]"
+
+    it "add" $ do
+      let test i1 i2 r = show (snailAdd (compileSnailNumber i1) (compileSnailNumber i2)) `shouldBe` r
+      test "[1,2]" "[3,4]" "[[1,2],[3,4]]"
+      test "[1,2]" "[[3,4],5]" "[[1,2],[[3,4],5]]"
+      test "[[[[4,3],4],4],[7,[[8,4],9]]]" "[1,1]" "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"
 
 
 
