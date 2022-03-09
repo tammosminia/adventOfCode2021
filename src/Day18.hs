@@ -1,12 +1,12 @@
 module Day18
-    ( compileSnailNumber, pathsToNumber, numberToPaths, snailAdd
+    ( compileSnailNumber, pathsToNumber, numberToPaths, snailAdd, snailSum1, snailSum2
     ) where
 
 import Util
 import Data.List
 import Data.List.Split
 
-data SnailNumber = Pair SnailNumber SnailNumber | Single Int
+data SnailNumber = Pair SnailNumber SnailNumber | Single Int deriving (Eq)
 data Direction = Left | Right deriving (Show, Eq)
 type SnailPath = [Direction] --first is last
 type SnailPaths = [(SnailPath, Int)]
@@ -98,3 +98,25 @@ splitFirst input = fmap splitSnail index
         right = ((Day18.Right : path), rightN)
         beforeI = take i input
         afterI = drop (i + 1) input
+
+snailSum1 :: [String] -> Int
+snailSum1 input = magnitude added
+  where
+    numbers = map compileSnailNumber input
+    added = foldl1 snailAdd numbers
+
+magnitude :: SnailNumber -> Int
+magnitude (Single i) = i
+magnitude (Pair l r) = 3 * magnitude l + 2 * magnitude r
+
+snailSum2 :: [String] -> Int
+snailSum2 input = maximum magnitudes
+  where
+    numbers = map compileSnailNumber input
+    magnitudes = map (\(e1, e2) -> magnitude (snailAdd e1 e2)) $ combinations numbers
+
+-- Return all pairs in both directions, not including the same element paired with itself
+combinations :: Eq a => [a] -> [(a, a)]
+combinations l = concatMap combineWith l
+  where
+    combineWith e1 = map (\e2 -> (e1, e2)) (delete e1 l)
